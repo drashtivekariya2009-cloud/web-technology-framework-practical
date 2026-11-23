@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMate - Student Planner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #e8f0ff);
+            color: #25264b
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .auth-page {
+            height: 100vh;
+            height: 100svh;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            background: #f5f6fb
+        }
+
+        .auth-topbar {
+            width: 100%;
+            height: 78px;
+            min-height: 78px;
+            flex-shrink: 0;
+            padding: 10px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: #29265c;
+            color: white;
+            border-bottom: 1px solid #201d4b
+        }
+
+        .auth-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold
+        }
+
+        .auth-brand-logo {
+            font-size: 30px
+        }
+
+        .auth-card {
+            width: calc(100% - 32px);
+            max-width: 420px;
+            min-height: 600px;
+            max-height: calc(100% - 94px);
+            overflow: auto;
+            margin: auto 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(255, 255, 255, .96);
+            border-radius: 22px;
+            padding: 44px 24px 42px;
+            box-shadow: 0 18px 40px rgba(35, 38, 75, .1);
+            border: 1px solid #e6e8f0
+        }
+
+        .auth-card h1 {
+            font-size: 29px;
+            margin-bottom: 10px;
+            text-align: center
+        }
+
+        .auth-subtitle {
+            color: #666;
+            margin-bottom: 22px;
+            line-height: 1.35;
+            text-align: center
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px
+        }
+
+        .login-form label {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            color: #444;
+            font-weight: 600
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 15px 14px;
+            border: 1px solid #d9d5fb;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white
+        }
+
+        .password-input-wrap {
+            position: relative;
+            width: 100%
+        }
+
+        .password-input-wrap input {
+            padding-right: 48px
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            padding: 4px;
+            transform: translateY(-50%);
+            background: transparent;
+            color: #29265c;
+            border: 0
+        }
+
+        .password-toggle:hover {
+            background: #f0eff8
+        }
+
+        .password-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .password-hint {
+            margin-top: 4px;
+            padding: 8px 10px;
+            border: 2px solid #29265c;
+            border-radius: 10px;
+            background: #f0eff8;
+            color: #29265c;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.4;
+            text-align: center
+        }
+
+        button {
+            background: #5146a5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px
+        }
+
+        .auth-actions {
+            display: flex;
+            gap: 10px;
+            margin: 0 0 6px
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #eeeff5;
+            color: #383957
+        }
+
+        .mode-btn:hover {
+            background: #e2e3ed
+        }
+
+        .mode-btn.active,
+        .mode-btn.active:hover {
+            background: #29265c;
+            color: white
+        }
+
+        .auth-submit-btn {
+            background: #29265c;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold
+        }
+
+        .auth-submit-btn:hover {
+            background: #39347a
+        }
+
+        .login-error {
+            min-height: 16px;
+            margin-top: 8px;
+            color: #d33a4f;
+            font-size: 14px
+        }
+
+        header {
+            background: #29265c;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px
+        }
+
+        .logo-wrap {
+            display: flex;
+            flex-direction: column
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold
+        }
+
+        header p {
+            margin-top: 5px;
+            color: #d7d5ff
+        }
+
+        .user-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .user-bar span {
+            font-weight: bold
+        }
+
+        .logout-btn {
+            padding: 9px 14px;
+            font-size: 13px
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1100px;
+            margin: 30px auto
+        }
+
+        .welcome {
+            background: linear-gradient(120deg, #5146a5, #7869d8);
+            color: white;
+            padding: 28px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px
+        }
+
+        .welcome h1 {
+            font-size: 27px;
+            margin-bottom: 10px
+        }
+
+        .welcome p {
+            color: #e9e7ff
+        }
+
+        .date {
+            background: #ffffff25;
+            padding: 12px 16px;
+            border-radius: 10px;
+            white-space: nowrap
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin: 25px 0
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #29265c10
+        }
+
+        .stat-card span {
+            font-size: 25px
+        }
+
+        .stat-card h2 {
+            margin: 10px 0 5px;
+            color: #5146a5
+        }
+
+        .stat-card p {
+            color: #777
+        }
+
+        .planner {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px #29265c10
+        }
+
+        .section-heading p {
+            color: #777;
+            margin-top: 6px
+        }
+
+        .task-form {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 10px;
+            margin: 25px 0
+        }
+
+        input,
+        select,
+        .task-form button {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px
+        }
+
+        .task-form button {
+            background: #5146a5;
+            color: white;
+            border: 0;
+            cursor: pointer
+        }
+
+        .task-form button:hover,
+        button:hover {
+            background: #39327e
+        }
+
+        .filter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #e8e7f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px
+        }
+
+        .task-info h4 {
+            margin-bottom: 5px
+        }
+
+        .task-info p {
+            color: #777;
+            font-size: 13px
+        }
+
+        .task.completed h4 {
+            text-decoration: line-through;
+            color: #888
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px
+        }
+
+        .task-actions button {
+            padding: 8px 10px;
+            font-size: 12px
+        }
+
+        .delete-btn {
+            background: #e45d70
+        }
+
+        #emptyMessage {
+            text-align: center;
+            color: #888;
+            padding: 20px
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777
+        }
+
+        @media(max-width:750px) {
+            .container {
+                width: 92%
+            }
+
+            .welcome {
+                flex-direction: column;
+                align-items: flex-start
+            }
+
+            .welcome h1 {
+                font-size: 22px
+            }
+
+            .stats {
+                grid-template-columns: 1fr
+            }
+
+            .task-form {
+                grid-template-columns: 1fr
+            }
+
+            .task {
+                align-items: flex-start;
+                flex-direction: column
+            }
+        }
+
+        @media(max-height:700px) {
+            .auth-topbar {
+                height: 58px;
+                min-height: 58px;
+                padding-top: 6px;
+                padding-bottom: 6px
+            }
+
+            .auth-card {
+                min-height: 0;
+                max-height: calc(100% - 68px);
+                padding: 14px 18px 12px
+            }
+
+            .auth-card h1 {
+                font-size: 22px;
+                margin-bottom: 6px
+            }
+
+            .auth-subtitle {
+                margin-bottom: 8px
+            }
+
+            .login-form {
+                gap: 7px
+            }
+
+            .login-form input {
+                padding: 8px 10px
+            }
+
+            .auth-actions {
+                margin-top: 0
+            }
+
+            .mode-btn,
+            .auth-submit-btn {
+                padding: 8px
+            }
+
+            .login-error {
+                min-height: 12px;
+                margin-top: 4px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loginPage" class="auth-page">
+        <header class="auth-topbar">
+            <div class="auth-brand"><span class="auth-brand-logo">📚</span><span>StudyMate</span></div>
+        </header>
+        <div class="auth-card">
+            <h1>Welcome</h1>
+            <p class="auth-subtitle">Create your account or sign in to manage your study plan.</p>
+            <form id="loginForm" class="login-form">
+                <div class="auth-actions"><button type="button" id="loginBtn"
+                        class="mode-btn active">Login</button><button type="button" id="registerBtn"
+                        class="mode-btn">Create Account</button></div><label><span>Username</span><input type="text"
+                        id="username" placeholder="Choose your username" required></label><label><span>Password</span>
+                    <div class="password-input-wrap"><input type="password" id="password" placeholder="Enter password"
+                            required><button type="button" class="password-toggle" data-password-toggle="password"
+                            aria-label="Show password" aria-pressed="false"><svg class="eye-icon" viewBox="0 0 24 24">
+                                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg><svg class="eye-off-icon hidden" viewBox="0 0 24 24">
+                                <path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                                <path
+                                    d="M9.9 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a14.8 14.8 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 4.1-.8">
+                                </path>
+                            </svg></button></div>
+                    <div id="passwordHint" class="password-hint hidden">Use 8-12 characters with uppercase, lowercase,
+                        and a special character.</div>
+                </label><label id="confirmPasswordField" class="hidden"><span>Confirm Password</span>
+                    <div class="password-input-wrap"><input type="password" id="confirmPassword"
+                            placeholder="Re-enter password"><button type="button" class="password-toggle"
+                            data-password-toggle="confirmPassword" aria-label="Show confirm password"
+                            aria-pressed="false"><svg class="eye-icon" viewBox="0 0 24 24">
+                                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg><svg class="eye-off-icon hidden" viewBox="0 0 24 24">
+                                <path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                                <path
+                                    d="M9.9 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a14.8 14.8 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 4.1-.8">
+                                </path>
+                            </svg></button></div>
+                </label><button type="submit" id="authSubmitBtn" class="auth-submit-btn">Login</button>
+            </form>
+            <p id="loginError" class="login-error"></p>
+        </div>
+    </div>
+    <div id="appPage" class="app-page hidden">
+        <header>
+            <div class="logo-wrap">
+                <div class="logo">📚 StudyMate</div>
+                <p>Your simple student planner</p>
+            </div>
+            <div class="user-bar"><span id="userNameLabel">Student</span><button id="logoutBtn"
+                    class="logout-btn">Logout</button></div>
+        </header>
+        <main class="container">
+            <section class="welcome">
+                <div>
+                    <h1>Plan your study, achieve your goals 🎓</h1>
+                    <p>Keep your assignments and study tasks organized.</p>
+                </div>
+                <div class="date" id="today"></div>
+            </section>
+            <section class="stats">
+                <div class="stat-card"><span>📋</span>
+                    <h2 id="totalCount">0</h2>
+                    <p>Total Tasks</p>
+                </div>
+                <div class="stat-card"><span>⏳</span>
+                    <h2 id="pendingCount">0</h2>
+                    <p>Pending</p>
+                </div>
+                <div class="stat-card"><span>✅</span>
+                    <h2 id="completedCount">0</h2>
+                    <p>Completed</p>
+                </div>
+            </section>
+            <section class="planner">
+                <div class="section-heading">
+                    <h2>My Study Tasks</h2>
+                    <p>Add and manage your daily tasks</p>
+                </div>
+                <form id="taskForm" class="task-form"><input type="text" id="taskName" placeholder="Enter task name"
+                        required><input type="text" id="subject" placeholder="Subject" required><input type="date"
+                        id="dueDate" required><button type="submit">+ Add Task</button></form>
+                <div class="filter-row">
+                    <h3>Task List</h3><select id="filter">
+                        <option value="all">All Tasks</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div id="taskList" class="task-list"></div>
+                <p id="emptyMessage">No tasks yet. Add your first study task!</p>
+            </section>
+        </main>
+        <footer>
+            <p>StudyMate © 2026 | Stay organized, keep learning.</p>
+        </footer>
+    </div>
+    <script>
+        const $ = id => document.getElementById(id);
+        let authMode = "login";
+        let tasks = [];
+
+        function validPassword(password) {
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,12}$/.test(password);
+        }
+
+        function hint() {
+            const password = $("password").value;
+            $("passwordHint").classList.toggle("hidden", !password || validPassword(password));
+        }
+
+        function setMode(mode) {
+            authMode = mode;
+            const isRegistering = mode === "register";
+
+            $("loginBtn").classList.toggle("active", !isRegistering);
+            $("registerBtn").classList.toggle("active", isRegistering);
+            $("confirmPasswordField").classList.toggle("hidden", !isRegistering);
+            $("confirmPassword").required = isRegistering;
+            $("authSubmitBtn").textContent = isRegistering ? "Create Account" : "Login";
+            $("loginError").textContent = "";
+            hint();
+        }
+
+        $("loginBtn").onclick = () => setMode("login");
+        $("registerBtn").onclick = () => setMode("register");
+        $("password").addEventListener("input", hint);
+
+        document.querySelectorAll("[data-password-toggle]").forEach(button => {
+            button.onclick = () => {
+                const input = $(button.dataset.passwordToggle);
+                const show = input.type === "password";
+
+                input.type = show ? "text" : "password";
+                button.querySelector(".eye-icon").classList.toggle("hidden", show);
+                button.querySelector(".eye-off-icon").classList.toggle("hidden", !show);
+                button.setAttribute("aria-pressed", String(show));
+                button.setAttribute("aria-label", (show ? "Hide " : "Show ") + input.id);
+            };
+        });
+
+        async function api(url, options = {}) {
+            const response = await fetch(url, {
+                ...options,
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(options.headers || {})
+                },
+                credentials: "same-origin"
+            });
+            const data = await response.json().catch(() => ({
+                message: "Server response error"
+            }));
+
+            if (!response.ok) {
+                throw Error(data.message || "Request failed");
+            }
+
+            return data;
+        }
+
+        function showApp(username) {
+            $("userNameLabel").textContent = username;
+            $("loginPage").classList.add("hidden");
+            $("appPage").classList.remove("hidden");
+            loadTasks();
+        }
+
+        function showLogin() {
+            $("appPage").classList.add("hidden");
+            $("loginPage").classList.remove("hidden");
+            $("loginForm").reset();
+            $("loginError").textContent = "";
+            setMode("login");
+        }
+
+        $("loginForm").onsubmit = async event => {
+            event.preventDefault();
+            hint();
+
+            const username = $("username").value.trim();
+            const password = $("password").value;
+
+            if (!username || !password) {
+                $("loginError").textContent = "Please enter username and password.";
+                return;
+            }
+
+            if (authMode === "register") {
+                if (!validPassword(password)) {
+                    $("loginError").textContent =
+                        "Password must be 8 to 12 characters long and include at least 1 uppercase, 1 lowercase, and 1 special character.";
+                    return;
+                }
+
+                if (password !== $("confirmPassword").value) {
+                    $("loginError").textContent = "Passwords do not match.";
+                    return;
+                }
+            }
+
+            try {
+                const data = await api("/api/auth/" + authMode, {
+                    method: "POST",
+                    body: JSON.stringify({ username, password })
+                });
+                showApp(data.username);
+            } catch (error) {
+                $("loginError").textContent = error.message;
+            }
+        };
+
+        $("logoutBtn").onclick = async () => {
+            try {
+                await api("/api/auth/logout", {
+                    method: "POST",
+                    body: "{}"
+                });
+            } catch (error) {
+                alert(error.message);
+            }
+
+            showLogin();
+        };
+
+        function escapeText(text) {
+            return String(text).replace(/[&<>"']/g, character => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            })[character]);
+        }
+
+        async function loadTasks() {
+            try {
+                tasks = await api("/api/tasks");
+                showTasks();
+            } catch (error) {
+                $("loginError").textContent = error.message;
+            }
+        }
+
+        function showTasks() {
+            const list = $("taskList");
+            list.innerHTML = "";
+
+            let filteredTasks = tasks;
+            if ($("filter").value === "pending") {
+                filteredTasks = tasks.filter(task => !task.completed);
+            } else if ($("filter").value === "completed") {
+                filteredTasks = tasks.filter(task => task.completed);
+            }
+
+            $("totalCount").textContent = tasks.length;
+            $("pendingCount").textContent = tasks.filter(task => !task.completed).length;
+            $("completedCount").textContent = tasks.filter(task => task.completed).length;
+            $("emptyMessage").style.display = filteredTasks.length ? "none" : "block";
+
+            filteredTasks.forEach(task => {
+                const taskElement = document.createElement("div");
+                taskElement.className = task.completed ? "task completed" : "task";
+                taskElement.innerHTML = `
+                    <div class="task-info">
+                        <h4>${escapeText(task.name)}</h4>
+                        <p>${escapeText(task.subject)} | Due: ${escapeText(task.dueDate)}</p>
+                    </div>
+                    <div class="task-actions">
+                        <button onclick="toggleTask('${task._id}')">
+                            ${task.completed ? "Undo" : "Complete"}
+                        </button>
+                        <button class="delete-btn" onclick="deleteTask('${task._id}')">
+                            Delete
+                        </button>
+                    </div>
+                `;
+                list.appendChild(taskElement);
+            });
+        }
+
+        $("taskForm").onsubmit = async event => {
+            event.preventDefault();
+
+            const name = $("taskName").value.trim();
+            const subject = $("subject").value.trim();
+            const dueDate = $("dueDate").value;
+
+            if (!name || !subject || !dueDate) {
+                alert("Please fill all fields.");
+                return;
+            }
+
+            try {
+                await api("/api/tasks", {
+                    method: "POST",
+                    body: JSON.stringify({ name, subject, dueDate })
+                });
+                $("taskForm").reset();
+                await loadTasks();
+            } catch (error) {
+                alert(error.message);
+            }
+        };
+
+        async function toggleTask(id) {
+            const task = tasks.find(item => item._id === id);
+            if (!task) {
+                return;
+            }
+
+            try {
+                await api("/api/tasks/" + id, {
+                    method: "PUT",
+                    body: JSON.stringify({ completed: !task.completed })
+                });
+                await loadTasks();
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        async function deleteTask(id) {
+            try {
+                await api("/api/tasks/" + id, { method: "DELETE" });
+                await loadTasks();
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        $("filter").onchange = showTasks;
+        $("today").textContent = new Date().toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        });
+
+        api("/api/auth/me")
+            .then(data => showApp(data.username))
+            .catch(() => showLogin());
+    </script>
+</body>
+
+</html>

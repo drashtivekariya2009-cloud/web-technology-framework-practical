@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Registration Portal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #e8eff5;
+            color: #1a252f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: #ffffff;
+            padding: 35px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e8eff5;
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #0d6efd;
+            letter-spacing: 0.5px;
+        }
+
+        .header h2 {
+            font-size: 15px;
+            font-weight: 500;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .section-title {
+            background-color: #0d6efd;
+            color: #ffffff;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            margin: 25px 0 15px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label, .checkbox-group label {
+            font-weight: normal;
+            margin-bottom: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease-in-out;
+            background-color: #f8f9fa;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #0d6efd;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+        }
+
+        .error {
+            display: none;
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            background: #0d6efd;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .submit-btn:hover {
+            background: #0b5ed7;
+        }
+
+        .status-message {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            min-height: 20px;
+        }
+
+        .status-message.success {
+            color: #198754;
+        }
+
+        .status-message.error-main {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>CITYCARE HOSPITAL</h1>
+            <h2>Online Registration Portal</h2>
+        </div>
+
+        <form id="patientForm" novalidate>
+            <!-- Personal Details -->
+            <div class="section-title">1. PERSONAL DETAILS</div>
+
+            <div class="form-group">
+                <label for="name">Patient Name *</label>
+                <input type="text" id="name" placeholder="Enter your full name">
+                <span class="error" id="nameError">Please enter a valid full name.</span>
+            </div>
+
+            <div class="form-group">
+                <label>Gender *</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="gender" value="male"> Male</label>
+                    <label><input type="radio" name="gender" value="female"> Female</label>
+                    <label><input type="radio" name="gender" value="other"> Other</label>
+                </div>
+                <span class="error" id="genderError">Please select your gender.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth *</label>
+                <input type="date" id="dob">
+                <span class="error" id="dobError">Select a valid birthdate.</span>
+            </div>
+
+            <!-- Blood Group Field Added Here -->
+            <div class="form-group">
+                <label for="bloodgp">Blood Group *</label>
+                <select id="bloodgp">
+                    <option value="">Select blood group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
+                <span class="error" id="bloodgpError">Please select a blood group.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="idProof">Upload ID Proof (Aadhaar / Passport) *</label>
+                <input type="file" id="idProof" accept=".pdf,.png,.jpg,.jpeg">
+                <span class="error" id="idProofError">Please upload a valid ID proof document.</span>
+            </div>
+
+            <!-- Contact Details -->
+            <div class="section-title">2. CONTACT DETAILS</div>
+
+            <div class="form-group">
+                <label for="mobile">Patient Mobile Number *</label>
+                <input type="tel" id="mobile" maxlength="10" placeholder="Enter 10-digit mobile number">
+                <span class="error" id="mobileError">Enter a valid 10-digit number starting with 6-9.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Patient Email *</label>
+                <input type="email" id="email" placeholder="Enter your email address">
+                <span class="error" id="emailError">Enter a valid email address.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address *</label>
+                <textarea id="address" rows="3" placeholder="Enter full home address"></textarea>
+                <span class="error" id="addError">Please enter your address.</span>
+            </div>
+
+            <!-- Emergency Contact Details -->
+            <div class="section-title">3. EMERGENCY CONTACT</div>
+
+            <div class="form-group">
+                <label for="emergencyName">Emergency Contact Person *</label>
+                <input type="text" id="emergencyName" placeholder="Relative / Guardian Name">
+                <span class="error" id="emergencyNameError">Please enter emergency contact name.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="emergencyMobile">Emergency Mobile Number *</label>
+                <input type="tel" id="emergencyMobile" maxlength="10" placeholder="10-digit emergency number">
+                <span class="error" id="emergencyMobileError">Enter a valid 10-digit mobile number.</span>
+            </div>
+
+            <!-- Medical Information -->
+            <div class="section-title">4. MEDICAL HISTORY & APPOINTMENT</div>
+
+            <div class="form-group">
+                <label>Pre-existing Conditions / History</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="history" value="diabetes"> Diabetes</label>
+                    <label><input type="checkbox" name="history" value="hypertension"> Hypertension (BP)</label>
+                    <label><input type="checkbox" name="history" value="allergies"> Allergies</label>
+                    <label><input type="checkbox" name="history" value="asthma"> Asthma</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department *</label>
+                <select id="department">
+                    <option value="">Select department</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Gynecology">Gynecology</option>
+                    <option value="Ophthalmology">Ophthalmology</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="General Medicine">General Medicine</option>
+                    <option value="Dental">Dentistry</option>
+                </select>
+                <span class="error" id="depError">Please select a department.</span>
+            </div>           
+            
+            <div class="form-group">
+                <label for="date">Appointment Date *</label>
+                <input type="date" id="date">
+                <span class="error" id="appdateError">Select a valid appointment date.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="timeslot">Preferred Time Slot *</label>
+                <select id="timeslot">
+                    <option value="">Select time slot</option>
+                    <option value="Morning">Morning (09:00 AM - 12:00 PM)</option>
+                    <option value="Afternoon">Afternoon (12:00 PM - 04:00 PM)</option>
+                    <option value="Evening">Evening (04:00 PM - 08:00 PM)</option>
+                </select>
+                <span class="error" id="timeslotError">Please select a preferred time slot.</span>
+            </div>
+
+            <!-- Account Security -->
+            <div class="section-title">5. ACCOUNT SECURITY</div>
+
+            <div class="form-group">
+                <label for="password">Create Password *</label>
+                <input type="password" id="password" placeholder="Create a strong password">
+                <span class="error" id="passwordError">Password must contain letters, numbers & special characters (min 8 chars).</span>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmpassword">Confirm Password *</label>
+                <input type="password" id="confirmpassword" placeholder="Re-enter password">
+                <span class="error" id="confirmError">Passwords do not match.</span>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="terms"> I accept the terms & hospital rules *</label>
+                </div>
+                <span class="error" id="termsError">You must agree to the terms before submitting.</span>
+            </div>
+
+            <button type="submit" class="submit-btn">Register Patient</button>
+            <div id="result" class="status-message"></div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("patientForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Reset error messages
+            const errorSpans = document.querySelectorAll(".error");
+            errorSpans.forEach(span => span.style.display = "none");
+
+            const resultDiv = document.getElementById("result");
+            resultDiv.textContent = "";
+            resultDiv.className = "status-message";
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // Name Validation
+            const nameInput = document.getElementById("name").value.trim();
+            const namePattern = /^[A-Za-z\s]+$/;
+            if (nameInput === "" || !namePattern.test(nameInput)) {
+                showError("nameError");
+                isValid = false;
+            }
+
+            // Gender Validation
+            const genderSelected = document.querySelector('input[name="gender"]:checked');
+            if (!genderSelected) {
+                showError("genderError");
+                isValid = false;
+            }
+
+            // DOB Validation
+            const dobInput = document.getElementById("dob").value;
+            if (dobInput === "") {
+                showError("dobError", "Select valid birthdate.");
+                isValid = false;
+            } else {
+                const dobDate = new Date(dobInput);
+                if (dobDate >= today) {
+                    showError("dobError", "Date of birth must be a past date.");
+                    isValid = false;
+                }
+            }
+
+            // Blood Group Validation
+            const bloodgpInput = document.getElementById("bloodgp").value;
+            if (bloodgpInput === "") {
+                showError("bloodgpError");
+                isValid = false;
+            }
+
+            // ID Proof Validation
+            const idProofInput = document.getElementById("idProof").value;
+            if (idProofInput === "") {
+                showError("idProofError");
+                isValid = false;
+            }
+
+            // Mobile Validation
+            const mobileInput = document.getElementById("mobile").value.trim();
+            const mobilePattern = /^[6-9]\d{9}$/;
+            if (!mobilePattern.test(mobileInput)) {
+                showError("mobileError");
+                isValid = false;
+            }
+
+            // Email Validation
+            const emailInput = document.getElementById("email").value.trim();
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput)) {
+                showError("emailError");
+                isValid = false;
+            }
+
+            // Address Validation
+            const addressInput = document.getElementById("address").value.trim();
+            if (addressInput === "") {
+                showError("addError");
+                isValid = false;
+            }
+
+            // Emergency Contact Validation
+            const emergencyName = document.getElementById("emergencyName").value.trim();
+            if (emergencyName === "" || !namePattern.test(emergencyName)) {
+                showError("emergencyNameError");
+                isValid = false;
+            }
+
+            const emergencyMobile = document.getElementById("emergencyMobile").value.trim();
+            if (!mobilePattern.test(emergencyMobile)) {
+                showError("emergencyMobileError");
+                isValid = false;
+            }
+
+            // Department Validation
+            const departmentInput = document.getElementById("department").value;
+            if (departmentInput === "") {
+                showError("depError");
+                isValid = false;
+            }
+
+            // Appointment Date Validation
+            const appDateInput = document.getElementById("date").value;
+            if (appDateInput === "") {
+                showError("appdateError", "Select valid appointment date.");
+                isValid = false;
+            } else {
+                const appDate = new Date(appDateInput);
+                if (appDate < today) {
+                    showError("appdateError", "Appointment date must be today or in the future.");
+                    isValid = false;
+                }
+            }
+
+            // Time Slot Validation
+            const timeslotInput = document.getElementById("timeslot").value;
+            if (timeslotInput === "") {
+                showError("timeslotError");
+                isValid = false;
+            }
+
+            // Password Validation
+            const passwordInput = document.getElementById("password").value;
+            const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordPattern.test(passwordInput)) {
+                showError("passwordError");
+                isValid = false;
+            }
+
+            // Confirm Password Validation
+            const confirmPasswordInput = document.getElementById("confirmpassword").value;
+            if (confirmPasswordInput === "" || confirmPasswordInput !== passwordInput) {
+                showError("confirmError");
+                isValid = false;
+            }
+
+            // Terms Validation
+            const termsChecked = document.getElementById("terms").checked;
+            if (!termsChecked) {
+                showError("termsError");
+                isValid = false;
+            }
+
+            // Final Status Display
+            if (isValid) {
+                resultDiv.classList.add("success");
+                resultDiv.textContent = "Registration Successful!";
+            } else {
+                resultDiv.classList.add("error-main");
+                resultDiv.textContent = "Please fill in all required fields correctly.";
+            }
+        });
+
+        function showError(elementId, message = null) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                if (message) {
+                    el.textContent = message;
+                }
+                el.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

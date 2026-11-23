@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopEase - Interactive Shopping Experience</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <div class="brand">
+      <img id="main-logo" src="https://img.magnific.com/premium-vector/makeup-artist-logo-with-woman-flower-brush-lipstick-gold-color_1128845-4114.jpg?semt=ais_hybrid&w=740&q=80" alt="ShopEase Logo">
+      <h1 id="shop-title">ShopEase</h1>
+    </div>
+    
+    <nav>
+      <ul>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#manage">Manage Catalog</a></li>
+        <li><a href="#planner">Tasks</a></li>
+        <li><a href="#contact">Contact & Login</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <!-- Icon based Switch Mode Button -->
+      <button class="icon-btn" id="theme-toggle" title="Toggle Mode">
+        <span id="theme-icon">🌙</span>
+      </button>
+      
+      <!-- Wishlist Indicator -->
+      <div id="wishlist-indicator" class="header-icon-btn">
+        ❤️ Wishlist (<span id="wishlist-count">0</span>)
+      </div>
+
+      <!-- Cart Indicator -->
+      <div id="cart-indicator" class="header-icon-btn">
+        🛒 Cart (<span id="cart-count">0</span>)
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <div id="feedback-banner" class="feedback-msg"></div>
+
+    <!-- Search & Filter Section -->
+    <section class="section-card">
+      <h2>Find Your Makeup Products</h2>
+      <div class="filter-container">
+        <input type="text" id="search-input" class="search-bar" placeholder="Type to search products (e.g., Lipstick, Foundation)...">
+        <select id="category-filter" class="filter-select">
+          <option value="all">All Categories</option>
+          <option value="lipstick">Lipstick</option>
+          <option value="foundation">Foundation</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section id="products" class="section-card">
+      <h2>Featured Collection</h2>
+      <p><small>Tip: Double-click an image for preview!</small></p>
+      <div class="product-grid" id="product-container">
+        
+        <div class="product-card" data-name="Matte Red Lipstick" data-price="250" data-category="lipstick">
+          <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTxDzk5D21wAtRc4IKN2XNZ9o9IpbKOiifaMtO8jlZvvDbNjJ7bbpOvrMPwTRcWHSmEL29fFZ6J8tHLyBmTt4slvGvPJYcnyFivbmnlOyy1Ck7cNWFYvA0UIw" alt="Matte Red Lipstick">
+          <h3>Matte Red Lipstick</h3>
+          <p class="price">Rs: 250.00</p>
+          <div class="card-buttons">
+            <button class="btn add-cart-btn">Add to Cart</button>
+            <button class="btn wishlist-btn">❤️</button>
+          </div>
+        </div>
+
+        <div class="product-card" data-name="Liquid Foundation" data-price="560" data-category="foundation">
+          <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRBvyzrBGf3AzH5M3kHWxRJ6buFw2QhdrQueUdD7MWey_NxATCEDtRWzxmm0KSDsFFn9EheZVGwzUcm7PfAnNaqOo_kDmGRe1Pm5CBVugj8Z_eW6rDrtCOe" alt="Liquid Foundation">
+          <h3>Liquid Foundation</h3>
+          <p class="price">Rs: 560.00</p>
+          <div class="card-buttons">
+            <button class="btn add-cart-btn">Add to Cart</button>
+            <button class="btn wishlist-btn">❤️</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Inventory Management -->
+    <section id="manage" class="section-card">
+      <h2>Manage Inventory</h2>
+      <div class="large-form-group">
+        <input type="text" id="new-product-name" class="large-input" placeholder="Product Name">
+        <input type="number" id="new-product-price" class="large-input" placeholder="Price (e.g., 250)">
+        <div class="btn-group">
+          <button id="add-product-btn" class="btn">Add Product</button>
+          <button id="remove-last-btn" class="btn secondary-btn">Remove Last Item</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Beauty Tasks / Routine Planner -->
+    <section id="planner" class="section-card">
+      <h2>Tasks & Routine Planner</h2>
+      <div class="large-form-group">
+        <input type="text" id="task-input" class="large-input" placeholder="Add a new task or routine step...">
+        <button id="add-task-btn" class="btn">Add Task</button>
+      </div>
+      <ul id="task-list"></ul>
+    </section>
+
+    <!-- Contact & Login Section -->
+    <section id="contact" class="section-card">
+      <h2>Login & Contact Us</h2>
+      <form id="contact-form">
+        <div class="large-form-group">
+          <input type="text" id="user-name" class="large-input" placeholder="Full Name" required>
+          <input type="email" id="user-email" class="large-input" placeholder="Email Address" required>
+          <textarea id="user-msg" class="large-input" rows="4" placeholder="Your Message or Inquiry..." required></textarea>
+          <button type="submit" class="btn">Submit</button>
+        </div>
+      </form>
+    </section>
+
+  </div>
+
+  <div class="footer">
+    <h6>&copy; 2026 ShopEase. All rights reserved</h6>
+  </div>
+
+  <!-- Cart Pop-up Modal -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <span id="close-cart" class="close-btn">&times;</span>
+      <h2>Your Cart Items</h2>
+      <div id="cart-items-container"></div>
+      <div class="cart-total">
+        <strong>Total: Rs <span id="cart-total-price">0.00</span></strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Preview Modal -->
+  <div id="image-modal" class="modal">
+    <div class="modal-content img-modal-content">
+      <span id="close-img-modal" class="close-btn img-close">&times; Close</span>
+      <img id="modal-img" src="" alt="Preview">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

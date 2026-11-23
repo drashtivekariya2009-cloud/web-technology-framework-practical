@@ -1,0 +1,274 @@
+/* ---------- Basic Setup ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5faf5;
+    color: #333;
+    line-height: 1.6;
+}
+
+
+/* ---------- Header ---------- */
+
+header {
+    background: linear-gradient(135deg, #1b5e20, #43a047, #81c784);
+    color: white;
+
+    padding: 25px 8%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-size: 32px;
+}
+
+header p {
+    font-size: 14px;
+}
+
+
+/* ---------- Navigation ---------- */
+
+nav ul {
+    list-style: none;
+
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------- Main ---------- */
+
+main {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+/* ---------- Sections ---------- */
+
+section {
+    margin: 30px 0;
+    padding: 35px;
+
+    background-color: white;
+
+    border-radius: 15px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+section h2 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+}
+
+
+/* ---------- Articles ---------- */
+
+article {
+    margin: 20px 0;
+}
+
+article h3 {
+    color: #388e3c;
+    margin-bottom: 8px;
+}
+
+
+/* ---------- Home ---------- */
+
+#home {
+    text-align: center;
+
+    background: linear-gradient(
+        135deg,
+        #e8f5e9,
+        #c8e6c9
+    );
+}
+
+#home h2 {
+    font-size: 35px;
+}
+
+
+/* ---------- Image ---------- */
+
+figure {
+    margin-top: 20px;
+    text-align: center;
+}
+
+figure img {
+    width: 100%;
+    max-width: 600px;
+
+    border-radius: 15px;
+}
+
+figcaption {
+    margin-top: 8px;
+    color: #666;
+}
+
+
+/* ---------- Aside ---------- */
+
+aside {
+    background-color: #e8f5e9;
+
+    padding: 20px;
+
+    border-left: 5px solid #43a047;
+
+    border-radius: 8px;
+}
+
+
+/* ---------- Lists ---------- */
+
+ul,
+ol {
+    margin-left: 25px;
+}
+
+li {
+    margin: 7px 0;
+}
+
+
+/* ---------- Table ---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+    margin-top: 20px;
+}
+
+th {
+    background-color: #388e3c;
+    color: white;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f1f8f1;
+}
+
+
+/* ---------- Form ---------- */
+
+form {
+    max-width: 600px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 10px;
+
+    margin-top: 5px;
+
+    border: 1px solid #bbb;
+
+    border-radius: 6px;
+}
+
+input[type="submit"] {
+    width: auto;
+
+    background-color: #388e3c;
+
+    color: white;
+
+    border: none;
+
+    padding: 10px 25px;
+
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #1b5e20;
+}
+
+
+/* ---------- Footer ---------- */
+
+footer {
+    background: linear-gradient(135deg, #1b5e20, #43a047);
+
+    color: white;
+
+    text-align: center;
+
+    padding: 25px;
+
+    margin-top: 40px;
+}
+
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    #home h2 {
+        font-size: 27px;
+    }
+
+    section {
+        padding: 25px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Bank Ltd.</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bank-container">
+        <h2>🏛️ Secure Bank Ltd.</h2>
+        <p class="subtitle">Online Banking Calculator</p>
+
+        <!-- Section 1: Loan Eligibility -->
+        <div class="bank-section">
+            <h3>1. Check Loan Eligibility</h3>
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" id="userAge" placeholder="Enter your age">
+            </div>
+            <div class="form-group">
+                <label>Monthly Income (₹)</label>
+                <input type="number" id="monthlyIncome" placeholder="Enter monthly income">
+            </div>
+            <div class="form-group">
+                <label>Loan Amount (₹)</label>
+                <input type="number" id="eligibilityLoanAmount" placeholder="Enter loan amount">
+            </div>
+            <button type="button" onclick="checkEligibilitySection()">Check Eligibility</button>
+            <div id="eligibilityError" class="section-msg"></div>
+        </div>
+
+        <!-- Section 2: Customer Information -->
+        <div class="bank-section">
+            <h3>2. Customer Information</h3>
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" id="firstName" placeholder="Enter first name">
+            </div>
+            <div class="form-group">
+                <label>Middle Name</label>
+                <input type="text" id="middleName" placeholder="Enter middle name">
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" id="lastName" placeholder="Enter last name">
+            </div>
+            <button type="button" onclick="saveCustomerInfo()">Save Customer Info</button>
+            <div id="customerInfoMsg" class="section-msg"></div>
+        </div>
+
+        <!-- Section 3: EMI Calculator -->
+        <div class="bank-section">
+            <h3>3. EMI Calculator</h3>
+            <div class="form-group">
+                <label>Loan Amount (₹)</label>
+                <input type="number" id="emiLoanAmount" placeholder="Enter loan amount">
+            </div>
+            <div class="form-group">
+                <label>Annual Interest Rate (%)</label>
+                <input type="number" id="emiInterestRate" placeholder="Enter interest rate" step="0.1">
+            </div>
+            <div class="form-group">
+                <label>Loan Tenure (Years)</label>
+                <input type="number" id="emiTenure" placeholder="Enter loan tenure">
+            </div>
+            <button type="button" onclick="calculateEMISection()">Calculate EMI</button>
+            <div id="emiResultMsg" class="section-msg"></div>
+        </div>
+
+        <!-- Section 4: Account Information -->
+        <div class="bank-section">
+            <h3>4. Account Information</h3>
+            <div class="form-group">
+                <label>Select Account Type:</label>
+                <select id="accountType">
+                    <option value="">-- Choose Account Type --</option>
+                    <option value="savings">Savings Account</option>
+                    <option value="current">Current Account</option>
+                    <option value="fixed">Fixed Deposit</option>
+                </select>
+            </div>
+            <button type="button" onclick="displayAccountInfoSection()">Display Account Information</button>
+            <div id="accountInfoMsg" class="section-msg"></div>
+        </div>
+
+        <!-- Section 5: Interest Table -->
+        <div class="bank-section">
+            <h3>5. Interest Table</h3>
+            <div class="form-group">
+                <label>Deposit Amount (₹)</label>
+                <input type="number" id="depositAmount" placeholder="Enter deposit amount">
+            </div>
+            <button type="button" onclick="generateInterestTableSection()">Generate Interest Table</button>
+            <div id="tableResultMsg" class="section-msg"></div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

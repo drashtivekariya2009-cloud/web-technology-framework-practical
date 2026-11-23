@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WanderGo Travels</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f8f6;
+    color: #263b38;
+}
+
+header {
+    background: #145b52;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+header h1 { margin: 0; font-size: 27px; }
+header p { margin: 5px 0 0; color: #d7f1e8; }
+
+nav { display: flex; gap: 8px; flex-wrap: wrap; }
+
+button {
+    border: 0;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background: #e8a94b;
+    color: #263b38;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover { background: #f5c16d; }
+
+.hero {
+    background: #d9eee6;
+    padding: 35px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.hero-text { max-width: 570px; }
+
+.hero h2 {
+    font-size: 38px;
+    line-height: 1.15;
+    margin: 0 0 12px;
+    color: #145b52;
+}
+
+.hero p { line-height: 1.6; }
+
+.hero-art {
+    background: #f4c879;
+    border-radius: 45% 45% 12px 12px;
+    min-width: 220px;
+    width: 30%;
+    min-height: 190px;
+    display: grid;
+    place-items: center;
+    font-size: 75px;
+}
+
+.offer {
+    background: #f9e8c8;
+    color: #63451a;
+    text-align: center;
+    padding: 13px;
+    font-weight: bold;
+}
+
+main {
+    width: 86%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+.tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.tools input {
+    padding: 11px;
+    border: 1px solid #b7d3ca;
+    border-radius: 5px;
+    width: min(100%, 280px);
+}
+
+#status { color: #55716b; margin: 12px 0 18px; }
+
+#destinations {
+    display: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+#destinations.show { display: grid; }
+
+.card {
+    display: flex;
+    gap: 16px;
+    padding: 17px;
+    background: white;
+    border: 1px solid #d8e8e2;
+    border-radius: 9px;
+}
+
+.card-icon {
+    min-width: 78px;
+    height: 78px;
+    border-radius: 8px;
+    background: #e2f2eb;
+    display: grid;
+    place-items: center;
+    font-size: 36px;
+}
+
+.card h3 { margin: 0 0 7px; color: #145b52; }
+.card p { margin: 6px 0; line-height: 1.4; font-size: 14px; }
+.card button { margin-top: 7px; }
+
+.extra {
+    margin-top: 28px;
+    padding: 20px;
+    background: white;
+    border-left: 5px solid #e8a94b;
+    border-radius: 7px;
+}
+
+#bookingMessage { font-weight: bold; }
+
+.dark { background: #202b29; color: #edf7f3; }
+.dark .hero { background: #2b403b; }
+.dark .hero h2, .dark .card h3 { color: #a9e2d0; }
+.dark .card, .dark .extra {
+    background: #303d39;
+    border-color: #455b54;
+}
+.dark .card-icon { background: #40564e; }
+.dark .offer { background: #51452f; color: #ffedc9; }
+.dark #status { color: #c1d6ce; }
+.dark .tools input { background: #303d39; color: white; }
+
+footer {
+    background: #145b52;
+    color: white;
+    text-align: center;
+    padding: 18px;
+    margin-top: 35px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.modal.show { display: flex; }
+
+.modal-box {
+    background: white;
+    color: #263b38;
+    width: 100%;
+    max-width: 470px;
+    max-height: 90vh;
+    overflow: auto;
+    padding: 22px;
+    border-radius: 9px;
+}
+
+.modal-box h2 { margin-top: 0; color: #145b52; }
+
+.modal-box label {
+    display: block;
+    margin: 12px 0 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.modal-box input, .modal-box select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #b7d3ca;
+    border-radius: 5px;
+    font: inherit;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.cancel { background: #e6e9e7; }
+
+#bookingResult {
+    display: none;
+    margin-top: 20px;
+    background: #e2f2eb;
+    padding: 16px;
+    border-radius: 7px;
+    line-height: 1.6;
+}
+
+@media(max-width: 700px) {
+    header { align-items: flex-start; }
+    .hero { flex-direction: column; align-items: flex-start; }
+    .hero h2 { font-size: 30px; }
+    .hero-art { width: 100%; min-height: 120px; }
+    main { width: 92%; }
+    #destinations { grid-template-columns: 1fr; }
+    .card { align-items: flex-start; }
+}
+
+@media(max-width: 390px) {
+    .card { flex-direction: column; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div>
+        <h1>WanderGo Travels</h1>
+        <p>Your journey, your story.</p>
+    </div>
+
+    <nav>
+        <button onclick="loadPlaces()">Explore Places</button>
+        <button onclick="changeTheme()">Change Colour</button>
+        <button onclick="showSaved()">My Trip</button>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-text">
+        <h2>Take a break.<br>Find your happy place.</h2>
+        <p>Discover new places, enjoy different cultures and plan a holiday you will remember.</p>
+        <button onclick="findDestinations()">Find a Destination</button>
+    </div>
+
+    <div class="hero-art">🌍 ✈️</div>
+</section>
+
+<div class="offer" id="offer">
+    Weekend special: Make your next trip memorable!
+</div>
+
+<main>
+    <div class="tools">
+        <div>
+            <h2 style="color:#145b52;margin-bottom:8px;">
+                Choose Your Next Stop
+            </h2>
+            <p style="margin:0;color:#71827e;">
+                Explore these places and choose your holiday package.
+            </p>
+        </div>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search a place..."
+            oninput="searchPlaces()">
+    </div>
+
+    <p id="status">Click “Find a Destination” to view destinations.</p>
+
+    <div id="destinations"></div>
+
+    <section class="extra">
+        <h2 style="color:#145b52;margin-top:0;">Booking Demo</h2>
+        <p>Select a destination and fill in the form to make a sample booking.</p>
+        <button onclick="openBooking('')">Book a Trip</button>
+        <p id="bookingMessage"></p>
+        <div id="bookingResult"></div>
+    </section>
+</main>
+
+<footer>
+    © 2026 WanderGo Travels | Explore more, worry less.
+</footer>
+
+<div class="modal" id="bookingModal">
+    <div class="modal-box">
+        <h2>Book Your Trip</h2>
+
+        <form id="bookingForm">
+            <label for="customerName">Your Name</label>
+            <input id="customerName" type="text" required placeholder="Enter your name">
+
+            <label for="customerEmail">Email</label>
+            <input id="customerEmail" type="email" required placeholder="Enter your email">
+
+            <label for="tripPlace">Destination</label>
+            <select id="tripPlace" required>
+                <option value="">Choose a destination</option>
+                <option value="Udaipur">Udaipur</option>
+                <option value="Goa">Goa</option>
+                <option value="Rishikesh">Rishikesh</option>
+                <option value="Andaman Islands">Andaman Islands</option>
+            </select>
+
+            <label for="tripDate">Travel Date</label>
+            <input id="tripDate" type="date" required>
+
+            <label for="travellers">Number of Travellers</label>
+            <select id="travellers" required>
+                <option value="1">1 Traveller</option>
+                <option value="2">2 Travellers</option>
+                <option value="3">3 Travellers</option>
+                <option value="4">4 Travellers</option>
+                <option value="5">5 Travellers</option>
+                <option value="6">6 Travellers</option>
+            </select>
+
+            <div class="modal-actions">
+                <button type="button" class="cancel" onclick="closeBooking()">Cancel</button>
+                <button type="submit">Confirm Booking</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// 1. Timer: change promotional messages
+const offers = [
+    "Weekend special: Make your next trip memorable!",
+    "Enjoy sunny beaches and lively markets in Goa!",
+    "Enjoy river views and adventure in Rishikesh!",
+    "Plan a peaceful island holiday in Andaman!"
+];
+
+let offerNumber = 0;
+
+setInterval(function () {
+    document.getElementById("offer").textContent = offers[offerNumber];
+    offerNumber++;
+
+    if (offerNumber >= offers.length) {
+        offerNumber = 0;
+    }
+}, 4000);
+
+
+// 2. Destination details
+const places = [
+    {
+        name: "Udaipur",
+        country: "Rajasthan, India",
+        price: "₹12,500",
+        days: "3 Days / 2 Nights",
+        description: "Visit City Palace, Lake Pichola and enjoy beautiful lake views.",
+        icon: "🏰"
+    },
+    {
+        name: "Goa",
+        country: "Goa, India",
+        price: "₹16,500",
+        days: "4 Days / 3 Nights",
+        description: "Relax on Baga Beach, visit Fort Aguada and explore colourful local markets.",
+        icon: "🏖️"
+    },
+    {
+        name: "Rishikesh",
+        country: "Uttarakhand, India",
+        price: "₹9,500",
+        days: "3 Days / 2 Nights",
+        description: "Enjoy the Ganga river, peaceful yoga spots and outdoor adventure.",
+        icon: "🏞️"
+    },
+    {
+        name: "Andaman Islands",
+        country: "India",
+        price: "₹28,000",
+        days: "5 Days / 4 Nights",
+        description: "Relax on sandy beaches and explore clear blue water and coral reefs.",
+        icon: "🏝️"
+    }
+];
+
+
+// 3. Show destinations only when the button is clicked
+function findDestinations() {
+    loadPlaces();
+
+    document.getElementById("destinations").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+// 4. Fetch JSON data with loading and error handling
+function loadPlaces() {
+    const status = document.getElementById("status");
+    const destinationBox = document.getElementById("destinations");
+
+    status.textContent = "Loading destinations...";
+    destinationBox.classList.add("show");
+    destinationBox.innerHTML = "";
+
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=1")
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("The server returned an error.");
+            }
+
+            return response.json();
+        })
+        .then(function (data) {
+            status.textContent = "Choose from the destinations below.";
+
+            // Display our travel package details after the API request.
+            displayPlaces(places);
+        })
+        .catch(function (error) {
+            status.textContent =
+                "The API could not be reached. You can still browse the available packages.";
+
+            // Keep the website usable if the network fails.
+            displayPlaces(places);
+        });
+}
+
+
+// 5. Display destination cards dynamically
+function displayPlaces(list) {
+    const box = document.getElementById("destinations");
+    box.innerHTML = "";
+
+    list.forEach(function (place) {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML =
+            '<div class="card-icon">' + place.icon + '</div>' +
+            '<div><h3>' + place.name + '</h3>' +
+            '<p><b>Location:</b> ' + place.country + '</p>' +
+            '<p>' + place.description + '</p>' +
+            '<p><b>Duration:</b> ' + place.days + '</p>' +
+            '<p><b>Package:</b> ' + place.price + ' per person</p></div>';
+
+        const details = card.querySelector("div:last-child");
+        const button = document.createElement("button");
+
+        button.textContent = "Book This Place";
+        button.onclick = function () {
+            openBooking(place.name);
+        };
+
+        details.appendChild(button);
+        box.appendChild(card);
+    });
+}
+
+
+// 6. Search destinations
+function searchPlaces() {
+    const word = document.getElementById("search").value.toLowerCase();
+
+    sessionStorage.setItem(
+        "currentSearch",
+        document.getElementById("search").value
+    );
+
+    const result = places.filter(function (place) {
+        return place.name.toLowerCase().includes(word) ||
+               place.country.toLowerCase().includes(word);
+    });
+
+    if (document.getElementById("destinations").children.length > 0) {
+        displayPlaces(result);
+        document.getElementById("status").textContent =
+            result.length + " destination(s) found.";
+    }
+}
+
+
+// 7. Save selected destination
+function savePlace(place) {
+    localStorage.setItem("myTrip", place);
+    sessionStorage.setItem("lastSelectedDestination", place);
+}
+
+
+// 8. Booking form functions
+function openBooking(place) {
+    document.getElementById("bookingModal").classList.add("show");
+
+    if (place) {
+        document.getElementById("tripPlace").value = place;
+        savePlace(place);
+    }
+}
+
+function closeBooking() {
+    document.getElementById("bookingModal").classList.remove("show");
+}
+
+
+// 9. Callback with setTimeout
+function processBooking(callback) {
+    document.getElementById("bookingMessage").textContent =
+        "Processing your booking...";
+
+    setTimeout(function () {
+        callback();
+    }, 1000);
+}
+
+
+// 10. Submit booking
+document.getElementById("bookingForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const booking = {
+        name: document.getElementById("customerName").value.trim(),
+        email: document.getElementById("customerEmail").value.trim(),
+        place: document.getElementById("tripPlace").value,
+        date: document.getElementById("tripDate").value,
+        travellers: document.getElementById("travellers").value,
+        bookingId: "WG" + Date.now().toString().slice(-6)
+    };
+
+    processBooking(function () {
+        sessionStorage.setItem(
+            "bookingInThisSession",
+            "Booking form submitted"
+        );
+
+        localStorage.setItem("myTrip", booking.place);
+        localStorage.setItem("lastBooking", JSON.stringify(booking));
+
+        document.getElementById("bookingMessage").textContent =
+            "Sample booking completed!";
+
+        const result = document.getElementById("bookingResult");
+        result.style.display = "block";
+
+        result.innerHTML =
+            "<b>Booking Confirmed (Demo)</b><br>" +
+            "Booking ID: " + booking.bookingId + "<br>" +
+            "Name: " + booking.name + "<br>" +
+            "Destination: " + booking.place + "<br>" +
+            "Travel Date: " + booking.date + "<br>" +
+            "Travellers: " + booking.travellers + "<br>" +
+            "<small>This is a practical demo. No payment or real reservation was made.</small>";
+
+        closeBooking();
+        document.getElementById("bookingForm").reset();
+    });
+});
+
+
+// 11. Show saved trip
+function showSaved() {
+    const place = localStorage.getItem("myTrip");
+    const booking = localStorage.getItem("lastBooking");
+
+    if (booking) {
+        const saved = JSON.parse(booking);
+
+        alert(
+            "Last Demo Booking\nDestination: " + saved.place +
+            "\nTravel Date: " + saved.date +
+            "\nTravellers: " + saved.travellers +
+            "\nBooking ID: " + saved.bookingId
+        );
+    } else if (place) {
+        alert("Your selected trip: " + place);
+    } else {
+        alert("You have not booked a trip yet.");
+    }
+}
+
+
+// 12. Change and restore theme
+function changeTheme() {
+    document.body.classList.toggle("dark");
+
+    const theme = document.body.classList.contains("dark")
+        ? "dark"
+        : "light";
+
+    localStorage.setItem("tripTheme", theme);
+}
+
+
+// 13. Restore saved preferences when the page opens
+window.onload = function () {
+    if (localStorage.getItem("tripTheme") === "dark") {
+        document.body.classList.add("dark");
+    }
+
+    const savedSearch = sessionStorage.getItem("currentSearch");
+
+    if (savedSearch) {
+        document.getElementById("search").value = savedSearch;
+    }
+
+    const lastSelected = sessionStorage.getItem("lastSelectedDestination");
+
+    if (lastSelected) {
+        document.getElementById("status").textContent =
+            "Welcome back to this session. Last selected: " + lastSelected;
+    }
+
+};
+</script>
+
+</body>
+</html>

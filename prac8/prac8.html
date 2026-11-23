@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TechMart Product Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="logo">T</div>
+        <span>
+            TechMart
+            <span style="font-weight:400;color:#c7d5dd">
+                / Product Management
+            </span>
+        </span>
+    </div>
+
+    <div class="top-note">Simple stock control</div>
+</header>
+
+
+<main>
+
+    <section class="welcome">
+
+        <div>
+            <p class="eyebrow">Store overview</p>
+
+            <h1>Product inventory</h1>
+
+            <p class="lead">
+                Keep your products organized, updated, and easy to find.
+            </p>
+        </div>
+
+        <div class="date-chip">
+            ● &nbsp; INVENTORY WORKSPACE
+        </div>
+
+    </section>
+
+
+    <!-- Metrics -->
+
+    <section class="metrics">
+
+        <div class="metric">
+            <div class="metric-icon">▤</div>
+
+            <div>
+                <div class="metric-label">Products listed</div>
+                <div class="metric-value" id="totalProducts">0</div>
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-icon">▦</div>
+
+            <div>
+                <div class="metric-label">Units in stock</div>
+                <div class="metric-value" id="totalUnits">0</div>
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-icon">₹</div>
+
+            <div>
+                <div class="metric-label">Inventory value</div>
+                <div class="metric-value" id="totalValue">₹0</div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- Main Layout -->
+
+    <section class="layout">
+
+        <!-- Add Product -->
+
+        <article class="panel">
+
+            <div class="panel-head">
+
+                <h2 id="formTitle">Add a product</h2>
+
+                <p>
+                    Fill in the details below to update your stock.
+                </p>
+
+            </div>
+
+
+            <div class="form-body">
+
+                <form id="productForm">
+
+                    <input type="hidden" id="productId">
+
+
+                    <div class="field">
+
+                        <label for="name">
+                            PRODUCT NAME
+                        </label>
+
+                        <input
+                            id="name"
+                            maxlength="100"
+                            placeholder="e.g. Wireless Mouse"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="category">
+                            CATEGORY
+                        </label>
+
+                        <select id="category" required>
+
+                            <option value="">
+                                Choose category
+                            </option>
+
+                            <option value="Computer">
+                                Computer
+                            </option>
+
+                            <option value="Mobile">
+                                Mobile
+                            </option>
+
+                            <option value="Accessories">
+                                Accessories
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="two">
+
+                        <div class="field">
+
+                            <label for="price">
+                                PRICE (₹)
+                            </label>
+
+                            <input
+                                id="price"
+                                type="number"
+                                min="0.01"
+                                step="0.01"
+                                placeholder="0.00"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="quantity">
+                                QUANTITY
+                            </label>
+
+                            <input
+                                id="quantity"
+                                type="number"
+                                min="0"
+                                step="1"
+                                placeholder="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="description">
+                            SHORT DESCRIPTION
+                        </label>
+
+                        <textarea
+                            id="description"
+                            maxlength="255"
+                            placeholder="A few words about the product"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="btns">
+
+                        <button
+                            class="primary"
+                            type="submit"
+                            id="submitBtn"
+                        >
+                            ＋ Add product
+                        </button>
+
+                        <button
+                            class="ghost"
+                            type="button"
+                            id="clearBtn"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="status"
+                        id="status"
+                    ></div>
+
+                </form>
+
+            </div>
+
+        </article>
+
+
+        <!-- Product List -->
+
+        <article class="panel">
+
+            <div class="list-head">
+
+                <h2>Current stock</h2>
+
+                <span
+                    class="count"
+                    id="countBadge"
+                >
+                    00 ITEMS
+                </span>
+
+            </div>
+
+
+            <div class="searchbar">
+
+                <input
+                    id="search"
+                    placeholder="⌕  Search by name or category..."
+                    aria-label="Search products"
+                >
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="productRows">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="empty"
+                            >
+                                Loading products...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </article>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <span>
+        © 2025 TechMart. All rights reserved.
+    </span>
+
+    <span>
+        Product Management System
+    </span>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

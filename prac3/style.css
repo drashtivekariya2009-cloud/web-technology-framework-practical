@@ -1,0 +1,127 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f2f2f2;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.bank-container {
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 22px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.bank-section {
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.bank-section h3 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 13px;
+    background: #fff;
+}
+
+button {
+    background-color: #e0e0e0;
+    color: #333;
+    border: 1px solid #adadad;
+    padding: 7px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-top: 5px;
+}
+
+button:hover {
+    background-color: #d4d4d4;
+}
+
+.section-msg {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Red Error Message */
+.error-text {
+    color: #d9534f;
+    font-weight: bold;
+}
+
+/* Green / Normal Success Message */
+.success-text {
+    color: #2b542c;
+}
+
+/* Classic Table Style */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    font-size: 13px;
+}
+
+th {
+    background-color: #eee;
+}
